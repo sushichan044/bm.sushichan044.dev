@@ -31,6 +31,11 @@ function extractISBN(url: URL, html: string): string | undefined {
 }
 
 function main() {
+  if (!("URLPattern" in globalThis)) {
+    window.alert("This bookmarklet requires browser support for the URLPattern API.");
+    return;
+  }
+
   const currentUrl = new URL(document.URL);
   const html = document.documentElement.innerHTML;
   const isbn = extractISBN(currentUrl, html);
