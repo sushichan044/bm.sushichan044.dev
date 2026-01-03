@@ -1,3 +1,7 @@
+/**
+ * NOTE: do not declare any top-level variables
+ */
+
 type ISBNExtractor = (url: URL, html: string) => string | undefined;
 
 function extractISBN(url: URL, html: string): string | undefined {
