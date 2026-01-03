@@ -176,7 +176,17 @@ app.get("/", async (c) => {
       <head>
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>bm.sushichan044.dev</title>
+        <meta content="noindex,nofollow" name="robots" />
+        <meta content="sushichan044's Bookmarklets Collection" name="description" />
+        <meta content="summary" name="twitter:card" />
+        <meta content="sushichan044's Bookmarklets" name="og:title" />
+        <meta
+          content="A collection of bookmarklets created by sushichan044."
+          name="og:description"
+        />
+        <meta content="website" name="og:type" />
+        <meta content="https://bm.sushichan044.dev" name="og:url" />
+        <title>sushichan044's Bookmarklets</title>
         {/* Baseline Status Widget https://github.com/web-platform-dx/baseline-status */}
         <script
           src="https://cdn.jsdelivr.net/npm/baseline-status@1/baseline-status.min.js"
@@ -213,7 +223,10 @@ app.get("/", async (c) => {
 
           <footer>
             <p>
-              © 2026 <a href="https://github.com/sushichan044" rel="noopener noreferrer" target="_blank">sushichan044</a>
+              © 2026{" "}
+              <a href="https://github.com/sushichan044" rel="noopener noreferrer" target="_blank">
+                sushichan044
+              </a>
             </p>
           </footer>
         </div>
