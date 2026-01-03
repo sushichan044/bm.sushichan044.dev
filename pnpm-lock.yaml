@@ -41,9 +41,6 @@ importers:
       hono:
         specifier: 4.11.3
         version: 4.11.3
-      web-features:
-        specifier: 3.12.0
-        version: 3.12.0
     devDependencies:
       '@types/node':
         specifier: catalog:dev
@@ -2521,9 +2518,6 @@ packages:
   validate-npm-package-name@5.0.1:
     resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-
-  web-features@3.12.0:
-    resolution: {integrity: sha512-1doJVkbrQGmtrJ/+tACLLKYbm6QQSjKnhGRmXEXlH99sppkK7/HatjjDv+fWt3oozKfIrOElkApljEMAQ6RhsA==}
 
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
@@ -5277,8 +5271,6 @@ snapshots:
 
   validate-npm-package-name@5.0.1:
     optional: true
-
-  web-features@3.12.0: {}
 
   webpack-virtual-modules@0.6.2:
     optional: true
