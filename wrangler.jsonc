@@ -19,9 +19,9 @@
   "observability": {
     "enabled": true,
     "traces": {
-      "enabled": true
-    }
-  }
+      "enabled": true,
+    },
+  },
   // "vars": {
   //   "MY_VAR": "my-variable"
   // },
