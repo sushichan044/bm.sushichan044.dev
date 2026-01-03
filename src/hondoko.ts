@@ -13,7 +13,7 @@ function extractISBN(url: URL, html: string): string | undefined {
 
   const booklogExtractor: ISBNExtractor = (_, html) => {
     // ISBN・EAN: 9784798640310
-    const match = /ISBN・EAN:\s*([0-9]{10}|[0-9]{13})/.exec(html);
+    const match = /ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)/.exec(html);
     if (match) {
       return match[1];
     }
