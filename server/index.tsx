@@ -247,7 +247,14 @@ const BookmarkletCard: FC<BookmarkletCardProps> = async ({ bookmarklet }) => {
       <h2 class={cardTitleStyle}>{bookmarklet.title}</h2>
       <p class={cardDescriptionStyle}>{bookmarklet.description}</p>
       <a href={getBookmarkletScript(bookmarklet.pathname)}>
-        Drag this link to your bookmarks: {bookmarklet.title}
+        {
+          /*
+           * When dragged, bookmarklet named with string inside this anchor.
+           * Do not add any redundant elements here.
+           *
+           */
+          bookmarklet.title
+        }
       </a>
       {webFeature !== undefined ? (
         <baseline-status
