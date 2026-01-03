@@ -1,0 +1,10 @@
+{
+  "extends": "@virtual-live-lab/tsconfig/hono",
+  "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["DOM", "ESNext"],
+    "types": ["node"],
+    "erasableSyntaxOnly": true
+  }
+}

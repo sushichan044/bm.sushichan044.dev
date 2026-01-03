@@ -1,0 +1,45 @@
+{
+  "name": "bm.sushichan044.dev",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "homepage": "https://bm.sushichan044.dev",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "lint": "eslint --max-warnings 0 --fix",
+    "lint:check": "eslint --max-warnings 0",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsgo --noEmit",
+    "check": "pnpm run format:check && pnpm run typecheck && pnpm run lint:check && pnpm run build",
+    "dev": "wrangler dev",
+    "build": "tsdown --config-loader unrun",
+    "typegen": "wrangler types",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "hono": "4.11.3",
+    "web-features": "3.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:dev",
+    "@typescript/native-preview": "catalog:dev",
+    "@virtual-live-lab/eslint-config": "catalog:dev",
+    "@virtual-live-lab/tsconfig": "catalog:dev",
+    "eslint": "catalog:dev",
+    "oxfmt": "catalog:dev",
+    "tsdown": "catalog:dev",
+    "typescript": "catalog:dev",
+    "typescript-eslint": "catalog:dev",
+    "wrangler": "4.54.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "pnpm@10.23.0"
+}
