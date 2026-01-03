@@ -259,7 +259,7 @@ const BookmarkletCard: FC<BookmarkletCardProps> = async ({ bookmarklet }) => {
       {webFeature !== undefined ? (
         <baseline-status
           feature-id={webFeature}
-          style="margin-bottom: 1rem; display: block;"
+          style="display: block;"
         ></baseline-status>
       ) : null}
     </li>
