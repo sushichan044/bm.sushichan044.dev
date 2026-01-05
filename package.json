@@ -32,6 +32,7 @@
     "@virtual-live-lab/tsconfig": "catalog:dev",
     "eslint": "catalog:dev",
     "oxfmt": "catalog:dev",
+    "tinyexec": "1.0.2",
     "tsdown": "catalog:dev",
     "typescript": "catalog:dev",
     "typescript-eslint": "catalog:dev",

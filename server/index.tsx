@@ -3,9 +3,11 @@ import type { FC } from "hono/jsx";
 import { Hono } from "hono";
 import { css, Style } from "hono/css";
 
+import type { ScriptName } from "./generated-scripts";
+
 type Bookmarklet = {
   description: string;
-  pathname: `/${string}`;
+  pathname: `/${ScriptName}`;
   /**
    * @see {@link https://github.com/web-platform-dx/web-features}
    */
@@ -25,7 +27,7 @@ const bookmarklets = [
       "対応しているページで使用すると、ISBNを抽出してHondokoのページを開きます。",
       "URLPattern API をサポートしているブラウザが必要です。",
     ].join("\n"),
-    pathname: "/hondoko.iife.mjs",
+    pathname: "/hondoko.iife.js",
     requiredWebFeature: "urlpattern",
     title: "Hondoko ISBN Extractor",
   },
