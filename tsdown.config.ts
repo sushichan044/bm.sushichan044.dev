@@ -7,7 +7,7 @@ export default defineConfig({
   },
   entry: ["src/*.ts"],
   fixedExtension: true,
-  format: "module",
+  format: "iife",
   minify: "dce-only",
   nodeProtocol: true,
   outDir: "dist",

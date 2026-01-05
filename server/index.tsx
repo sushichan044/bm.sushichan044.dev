@@ -25,7 +25,7 @@ const bookmarklets = [
       "対応しているページで使用すると、ISBNを抽出してHondokoのページを開きます。",
       "URLPattern API をサポートしているブラウザが必要です。",
     ].join("\n"),
-    pathname: "/hondoko.mjs",
+    pathname: "/hondoko.iife.mjs",
     requiredWebFeature: "urlpattern",
     title: "Hondoko ISBN Extractor",
   },
