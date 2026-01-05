@@ -2,23 +2,33 @@
  * NOTE: do not declare any top-level variables
  */
 
-function createURLPatternMatch<Keys extends string>(patterns: Record<Keys, URLPattern>) {
-  return <Args extends unknown[], Result>(handlers: {
-    [K in NoInfer<Keys>]: (match: URLPatternResult, url: URL, ...args: Args) => Result;
-  }) => {
-    return (url: string | URL, ...args: Args): Result | undefined => {
-      const targetUrl = typeof url === "string" ? new URL(url) : url;
+type URLPatternParam = ConstructorParameters<typeof URLPattern>[0];
 
-      for (const key of Object.keys(patterns) as Keys[]) {
-        const pattern = patterns[key];
-        const match = pattern.exec(targetUrl);
-        if (match !== null) {
-          return handlers[key](match, targetUrl, ...args);
-        }
-      }
-      return undefined;
-    };
-  };
+class URLPatternMatcher<Output = unknown, Extras extends readonly unknown[] = readonly unknown[]> {
+  #extras: NoInfer<Extras>;
+  #output: Output | undefined;
+  #url: URL;
+
+  constructor(url: string | URL, ...extras: Extras) {
+    this.#url = typeof url === "string" ? new URL(url) : url;
+    this.#extras = extras;
+  }
+
+  exec(): Output | undefined {
+    return this.#output;
+  }
+
+  with(
+    param: URLPatternParam,
+    handler: (match: URLPatternResult, url: URL, ...extras: Extras) => Output,
+  ): URLPatternMatcher<Output, Extras> {
+    const pattern = new URLPattern(param);
+    const match = pattern.exec(this.#url);
+    if (match !== null) {
+      this.#output = handler(match, this.#url, ...this.#extras);
+    }
+    return this;
+  }
 }
 
 function isISBN(value: unknown): value is string {
@@ -26,52 +36,53 @@ function isISBN(value: unknown): value is string {
 }
 
 function extractISBN(url: URL, html: string): string | undefined {
-  const patterns = createURLPatternMatch({
-    booklog: new URLPattern({
-      hostname: "booklog.jp",
-      pathname: "/item/1/:pageId",
-      protocol: "http{s}?",
-    }),
-    // https://www.maruzenjunkudo.co.jp/products/9784798638614
-    junkudoDetails: new URLPattern({
-      hostname: "www.maruzenjunkudo.co.jp",
-      pathname: "/products/:productId",
-      protocol: "http{s}?",
-    }),
-    // https://www.maruzenjunkudo.co.jp/pages/shoplist?product=9784798638614
-    junkudoSearch: new URLPattern({
-      hostname: "www.maruzenjunkudo.co.jp",
-      pathname: "/pages/shoplist",
-      protocol: "http{s}?",
-    }),
-  });
+  const isbn = new URLPatternMatcher<string | undefined, [string]>(url, html)
+    .with(
+      {
+        hostname: "www.maruzenjunkudo.co.jp",
+        pathname: "/products/:productId",
+        protocol: "http{s}?",
+      },
+      (match) => {
+        const productId = match.pathname.groups["productId"];
+        if (isISBN(productId)) {
+          return productId;
+        }
+        return undefined;
+      },
+    )
+    .with(
+      {
+        hostname: "www.maruzenjunkudo.co.jp",
+        pathname: "/pages/shoplist",
+        protocol: "http{s}?",
+      },
+      (_, url) => {
+        const product = url.searchParams.get("product");
+        if (isISBN(product)) {
+          return product;
+        }
+        return undefined;
+      },
+    )
+    .with(
+      {
+        hostname: "booklog.jp",
+        pathname: "/item/1/:pageId",
+        protocol: "http{s}?",
+      },
+      (_, __, html) => {
+        // ISBN・EAN: 9784798640310
+        const htmlMatch = /ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)/.exec(html);
+        if (htmlMatch) {
+          return htmlMatch[1];
+        }
+        return undefined;
+      },
+    )
+    .exec();
 
-  const getISBN = patterns<[string], string | undefined>({
-    booklog: (_, __, html) => {
-      // ISBN・EAN: 9784798640310
-      const htmlMatch = /ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)/.exec(html);
-      if (htmlMatch) {
-        return htmlMatch[1];
-      }
-      return undefined;
-    },
-    junkudoDetails: (match) => {
-      const productId = match.pathname.groups["productId"];
-      if (isISBN(productId)) {
-        return productId;
-      }
-      return undefined;
-    },
-    junkudoSearch: (_, url) => {
-      const product = url.searchParams.get("product");
-      if (isISBN(product)) {
-        return product;
-      }
-      return undefined;
-    },
-  });
-
-  return getISBN(url, html);
+  return isbn;
 }
 
 function main() {
