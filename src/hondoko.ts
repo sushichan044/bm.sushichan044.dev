@@ -4,30 +4,49 @@
 
 type URLPatternParam = ConstructorParameters<typeof URLPattern>[0];
 
-class URLPatternMatcher<Output = unknown, Extras extends readonly unknown[] = readonly unknown[]> {
-  #extras: NoInfer<Extras>;
-  #output: Output | undefined;
+type MatchState<Output> =
+  | {
+      matched: false;
+      output: undefined;
+    }
+  | {
+      matched: true;
+      output: Output;
+    };
+
+class URLPatternMatcher<Inputs extends readonly unknown[] = readonly unknown[], Output = unknown> {
+  #extras: NoInfer<Inputs>;
+  #state: MatchState<Output>;
   #url: URL;
 
-  constructor(url: string | URL, ...extras: Extras) {
+  constructor(url: string | URL, ...extras: Inputs) {
     this.#url = typeof url === "string" ? new URL(url) : url;
     this.#extras = extras;
+    this.#state = { matched: false, output: undefined };
   }
 
-  exec(): Output | undefined {
-    return this.#output;
-  }
-
-  with(
+  case(
     param: URLPatternParam,
-    handler: (match: URLPatternResult, url: URL, ...extras: Extras) => Output,
-  ): URLPatternMatcher<Output, Extras> {
+    handler: (match: URLPatternResult, url: URL, ...extras: Inputs) => Output,
+  ): URLPatternMatcher<Inputs, Output> {
+    if (this.#state.matched) {
+      return this;
+    }
+
     const pattern = new URLPattern(param);
     const match = pattern.exec(this.#url);
     if (match !== null) {
-      this.#output = handler(match, this.#url, ...this.#extras);
+      this.#state = { matched: true, output: handler(match, this.#url, ...this.#extras) };
     }
     return this;
+  }
+
+  exec(): Output | undefined {
+    return this.#state.matched ? this.#state.output : undefined;
+  }
+
+  expect<T>(): URLPatternMatcher<Inputs, T> {
+    return this as unknown as URLPatternMatcher<Inputs, T>;
   }
 }
 
@@ -36,8 +55,9 @@ function isISBN(value: unknown): value is string {
 }
 
 function extractISBN(url: URL, html: string): string | undefined {
-  const isbn = new URLPatternMatcher<string | undefined, [string]>(url, html)
-    .with(
+  const isbn = new URLPatternMatcher(url, html)
+    .expect<string | undefined>()
+    .case(
       {
         hostname: "www.maruzenjunkudo.co.jp",
         pathname: "/products/:productId",
@@ -51,7 +71,7 @@ function extractISBN(url: URL, html: string): string | undefined {
         return undefined;
       },
     )
-    .with(
+    .case(
       {
         hostname: "www.maruzenjunkudo.co.jp",
         pathname: "/pages/shoplist",
@@ -65,7 +85,7 @@ function extractISBN(url: URL, html: string): string | undefined {
         return undefined;
       },
     )
-    .with(
+    .case(
       {
         hostname: "booklog.jp",
         pathname: "/item/1/:pageId",
