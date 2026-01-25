@@ -1,14 +1,10 @@
-import { regex } from "arkregex";
-
+import { extractISBNFromHTML } from "../features/hondoko";
 import { isISBN } from "../utils/isbn";
 import { URLPatternMatcher } from "../utils/url-pattern";
 
-// ISBN・EAN: 9784798640310
-const booklogISBNRegex = regex("ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)");
-
-function extractISBN(url: URL, html: string): string | undefined {
+function extractISBN(url: URL, html: string): string | null {
   const isbn = new URLPatternMatcher(url, html)
-    .expect<string | undefined>()
+    .expect<string | null>()
     .case(
       {
         hostname: "www.maruzenjunkudo.co.jp",
@@ -20,7 +16,7 @@ function extractISBN(url: URL, html: string): string | undefined {
         if (isISBN(productId)) {
           return productId;
         }
-        return undefined;
+        return null;
       },
     )
     .case(
@@ -34,7 +30,7 @@ function extractISBN(url: URL, html: string): string | undefined {
         if (isISBN(product)) {
           return product;
         }
-        return undefined;
+        return null;
       },
     )
     .case(
@@ -44,16 +40,12 @@ function extractISBN(url: URL, html: string): string | undefined {
         protocol: "http{s}?",
       },
       (_, __, html) => {
-        const htmlMatch = booklogISBNRegex.exec(html);
-        if (htmlMatch) {
-          return htmlMatch[1];
-        }
-        return undefined;
+        return extractISBNFromHTML(html);
       },
     )
     .exec();
 
-  return isbn;
+  return isbn ?? null;
 }
 
 function main() {
@@ -66,7 +58,7 @@ function main() {
   const html = document.documentElement.innerHTML;
   const isbn = extractISBN(currentUrl, html);
 
-  if (isbn === undefined) {
+  if (isbn == null) {
     window.alert("Could not extract ISBN.");
     return;
   }

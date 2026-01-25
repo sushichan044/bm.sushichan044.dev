@@ -18,7 +18,7 @@
     "typecheck": "tsgo --noEmit",
     "check": "pnpm run format:check && pnpm run typecheck && pnpm run lint:check && pnpm run build",
     "dev": "wrangler dev",
-    "build": "tsdown --config-loader unrun",
+    "build": "tsdown",
     "typegen": "wrangler types",
     "deploy": "wrangler deploy"
   },
@@ -26,21 +26,17 @@
     "hono": "4.11.5"
   },
   "devDependencies": {
-    "@types/node": "catalog:dev",
-    "@typescript/native-preview": "catalog:dev",
-    "@virtual-live-lab/eslint-config": "catalog:dev",
-    "@virtual-live-lab/tsconfig": "catalog:dev",
+    "@typescript/native-preview": "7.0.0-dev.20260124.1",
+    "@virtual-live-lab/eslint-config": "^2.3.1",
+    "@virtual-live-lab/tsconfig": "^2.1.21",
     "arkregex": "0.0.5",
-    "eslint": "catalog:dev",
-    "oxfmt": "catalog:dev",
+    "bun-types": "^1.3.6",
+    "eslint": "^9.39.2",
+    "oxfmt": "^0.26.0",
     "tinyexec": "1.0.2",
-    "tsdown": "catalog:dev",
-    "typescript": "catalog:dev",
-    "typescript-eslint": "catalog:dev",
+    "tsdown": "^0.20.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
     "wrangler": "4.60.0"
-  },
-  "engines": {
-    "node": ">=20.19.0"
-  },
-  "packageManager": "pnpm@10.23.0"
+  }
 }

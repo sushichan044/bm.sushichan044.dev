@@ -4,7 +4,7 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "lib": ["DOM", "ESNext"],
-    "types": ["node"],
+    "types": ["bun-types"],
     "erasableSyntaxOnly": true
   }
 }
