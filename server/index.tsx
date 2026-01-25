@@ -67,7 +67,11 @@ const globalStyles = css`
   }
 
   body {
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     margin: 0;

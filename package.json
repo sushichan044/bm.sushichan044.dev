@@ -23,7 +23,7 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "hono": "4.11.3"
+    "hono": "4.11.5"
   },
   "devDependencies": {
     "@types/node": "catalog:dev",
@@ -36,7 +36,7 @@
     "tsdown": "catalog:dev",
     "typescript": "catalog:dev",
     "typescript-eslint": "catalog:dev",
-    "wrangler": "4.54.0"
+    "wrangler": "4.60.0"
   },
   "engines": {
     "node": ">=20.19.0"
