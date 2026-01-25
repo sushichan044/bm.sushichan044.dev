@@ -44,7 +44,7 @@ const globalStyles = css`
     --shadow: rgba(0, 0, 0, 0.08);
     --shadow-hover: rgba(0, 0, 0, 0.12);
   }
-
+  
   @media (prefers-color-scheme: dark) {
     :root {
       --bg-primary: #1a1a1a;
@@ -57,15 +57,15 @@ const globalStyles = css`
       --shadow-hover: rgba(255, 255, 255, 0.15);
     }
   }
-
+  
   * {
     box-sizing: border-box;
   }
-
+  
   html {
     font-size: 16px;
   }
-
+  
   body {
     font-family:
       system-ui,
@@ -79,29 +79,29 @@ const globalStyles = css`
     line-height: 1.6;
     min-height: 100vh;
   }
-
+  
   footer {
     position: sticky;
     top: 100%;
   }
-
+  
   a {
     display: inline-block;
     font-size: 1rem;
     color: var(--link-color);
     text-decoration: underline;
     transition: color 0.2s ease-in-out;
-
+  
     &:hover {
       color: var(--link-hover);
     }
-
+  
     &:focus {
       outline: 2px solid var(--link-color);
       outline-offset: 2px;
     }
   }
-
+  
   baseline-status {
     margin-block: 1rem;
   }
@@ -113,7 +113,7 @@ const containerStyle = css`
   padding: 1rem;
   width: 100%;
   height: 100%;
-
+  
   @media (min-width: 1025px) {
     padding: 2rem;
   }
@@ -128,7 +128,7 @@ const titleStyle = css`
   line-height: 1.2;
   margin: 0;
   color: var(--text-primary);
-
+  
   @media (min-width: 641px) {
     font-size: 2.5rem;
   }
@@ -192,7 +192,7 @@ const listStyle = css`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-
+  
   @media (min-width: 1025px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -217,7 +217,7 @@ const cardStyle = css`
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px var(--shadow);
-
+  
   &:hover {
     box-shadow: 0 4px 12px var(--shadow-hover);
   }
@@ -228,7 +228,7 @@ const cardTitleStyle = css`
   line-height: 1.2;
   margin: 0 0 0.75rem 0;
   color: var(--text-primary);
-
+  
   @media (min-width: 641px) {
     font-size: 1.5rem;
   }

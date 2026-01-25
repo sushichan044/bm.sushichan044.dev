@@ -30,6 +30,7 @@
     "@typescript/native-preview": "catalog:dev",
     "@virtual-live-lab/eslint-config": "catalog:dev",
     "@virtual-live-lab/tsconfig": "catalog:dev",
+    "arkregex": "0.0.5",
     "eslint": "catalog:dev",
     "oxfmt": "catalog:dev",
     "tinyexec": "1.0.2",

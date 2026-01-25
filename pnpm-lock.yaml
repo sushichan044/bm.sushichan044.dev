@@ -54,6 +54,9 @@ importers:
       '@virtual-live-lab/tsconfig':
         specifier: catalog:dev
         version: 2.1.21(typescript@5.9.3)
+      arkregex:
+        specifier: 0.0.5
+        version: 0.0.5
       eslint:
         specifier: catalog:dev
         version: 9.39.2(jiti@2.6.1)
@@ -88,6 +91,9 @@ packages:
   '@arethetypeswrong/core@0.18.2':
     resolution: {integrity: sha512-GiwTmBFOU1/+UVNqqCGzFJYfBXEytUkiI+iRZ6Qx7KmUVtLm00sYySkfe203C9QtPG11yOz1ZaMek8dT/xnlgg==}
     engines: {node: '>=20'}
+
+  '@ark/util@0.56.0':
+    resolution: {integrity: sha512-BghfRC8b9pNs3vBoDJhcta0/c1J1rsoS1+HgVUreMFPdhz/CRAKReAu57YEllNaSy98rWAdY1gE+gFup7OXpgA==}
 
   '@astrojs/compiler@2.12.2':
     resolution: {integrity: sha512-w2zfvhjNCkNMmMMOn5b0J8+OmUaBL1o40ipMvqcG6NRpdC+lKxmTi48DT8Xw0SzJ3AfmeFLB45zXZXtmbsjcgw==}
@@ -1071,6 +1077,9 @@ packages:
   aria-query@5.3.2:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
+
+  arkregex@0.0.5:
+    resolution: {integrity: sha512-ncYjBdLlh5/QnVsAA8De16Tc9EqmYM7y/WU9j+236KcyYNUXogpz3sC4ATIZYzzLxwI+0sEOaQLEmLmRleaEXw==}
 
   array-buffer-byte-length@1.0.2:
     resolution: {integrity: sha512-LHE+8BuR7RYGDKvnrmcuSq3tDcKv9OFEXQt/HpbZhY7V6h0zlUXutnAD82GiFx9rdieCMjkvtcsPqBwgUl1Iiw==}
@@ -2556,6 +2565,8 @@ snapshots:
       validate-npm-package-name: 5.0.1
     optional: true
 
+  '@ark/util@0.56.0': {}
+
   '@astrojs/compiler@2.12.2': {}
 
   '@babel/code-frame@7.27.1':
@@ -3490,6 +3501,10 @@ snapshots:
   argparse@2.0.1: {}
 
   aria-query@5.3.2: {}
+
+  arkregex@0.0.5:
+    dependencies:
+      '@ark/util': 0.56.0
 
   array-buffer-byte-length@1.0.2:
     dependencies:

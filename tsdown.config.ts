@@ -29,11 +29,15 @@ export default defineConfig({
       await x("pnpm", ["run", "format"]);
     },
   },
+  inlineOnly: false,
+  // Allow bundle dependencies
   minify: "dce-only",
   nodeProtocol: true,
   outDir: "dist",
+  outputOptions: {
+    codeSplitting: false,
+  },
   platform: "browser",
-  sourcemap: true,
   treeshake: true,
   unused: {
     ignore: {

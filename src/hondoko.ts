@@ -1,58 +1,10 @@
-/**
- * NOTE: do not declare any top-level variables
- */
+import { regex } from "arkregex";
 
-type URLPatternParam = ConstructorParameters<typeof URLPattern>[0];
+import { isISBN } from "../utils/isbn";
+import { URLPatternMatcher } from "../utils/url-pattern";
 
-type MatchState<Output> =
-  | {
-      matched: false;
-      output: undefined;
-    }
-  | {
-      matched: true;
-      output: Output;
-    };
-
-class URLPatternMatcher<Inputs extends readonly unknown[] = readonly unknown[], Output = unknown> {
-  #extras: NoInfer<Inputs>;
-  #state: MatchState<Output>;
-  #url: URL;
-
-  constructor(url: string | URL, ...extras: Inputs) {
-    this.#url = typeof url === "string" ? new URL(url) : url;
-    this.#extras = extras;
-    this.#state = { matched: false, output: undefined };
-  }
-
-  case(
-    param: URLPatternParam,
-    handler: (match: URLPatternResult, url: URL, ...extras: Inputs) => Output,
-  ): URLPatternMatcher<Inputs, Output> {
-    if (this.#state.matched) {
-      return this;
-    }
-
-    const pattern = new URLPattern(param);
-    const match = pattern.exec(this.#url);
-    if (match !== null) {
-      this.#state = { matched: true, output: handler(match, this.#url, ...this.#extras) };
-    }
-    return this;
-  }
-
-  exec(): Output | undefined {
-    return this.#state.matched ? this.#state.output : undefined;
-  }
-
-  expect<T>(): URLPatternMatcher<Inputs, T> {
-    return this as unknown as URLPatternMatcher<Inputs, T>;
-  }
-}
-
-function isISBN(value: unknown): value is string {
-  return typeof value === "string" && /^[0-9]{10}(?:[0-9]{3})?$/.test(value);
-}
+// ISBN・EAN: 9784798640310
+const booklogISBNRegex = regex("ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)");
 
 function extractISBN(url: URL, html: string): string | undefined {
   const isbn = new URLPatternMatcher(url, html)
@@ -92,8 +44,7 @@ function extractISBN(url: URL, html: string): string | undefined {
         protocol: "http{s}?",
       },
       (_, __, html) => {
-        // ISBN・EAN: 9784798640310
-        const htmlMatch = /ISBN・EAN:\s*([0-9]{10}(?:[0-9]{3})?)/.exec(html);
+        const htmlMatch = booklogISBNRegex.exec(html);
         if (htmlMatch) {
           return htmlMatch[1];
         }
