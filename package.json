@@ -20,7 +20,8 @@
     "dev": "wrangler dev",
     "build": "tsdown",
     "typegen": "wrangler types",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "test": "bun test"
   },
   "dependencies": {
     "hono": "4.11.5"
